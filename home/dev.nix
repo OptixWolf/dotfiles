@@ -8,8 +8,6 @@
     mongodb-compass
     mysql-workbench
     termius
-    mono
-    msbuild
     docker-compose
   ];
 }
