@@ -7,7 +7,7 @@ let
       owner = "EliverLara";
       repo = "AndromedaLauncher";
       rev = "6bd0ac49b60888dd502169b0eacf5ca5146b1ec1";
-      hash = "sha256-+AQqLIFmlq8tMQT+zY3Y6kdI1IMBRaTXZYBGdGdStDw=";
+      hash = "sha256-MSYD8eH6m4vWfvoAfHkqMed+ZGjFE0Ln75cqIZYq9Eg=";
     };
     installPhase = ''
       mkdir -p $out/share/plasma/plasmoids/AndromedaLauncher
