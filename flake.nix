@@ -22,83 +22,63 @@
   };
 
   outputs = { nixpkgs, home-manager, caelestia-shell, aagl, plasma-manager, ... }@inputs:
-  let
-    system = "x86_64-linux";
-    username = "optixwolf";
-    mkConfiguration = { gpuModule, desktopModule, desktopHomeModules }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs username; };
-        modules = [
-          ./hosts/nixos
-          gpuModule
-          desktopModule
-          aagl.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            nix.settings = aagl.nixConfig;
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "bak";
-              extraSpecialArgs = { inherit inputs username; };
-              users.${username} = {
-                imports = desktopHomeModules;
+    let
+      system = "x86_64-linux";
+      username = "optixwolf";
+
+      desktopModules = [
+        ./hosts/nixos/plasma.nix
+        ./hosts/nixos/hyprland.nix
+      ];
+
+      combinedHomeModules = [
+        ./home
+        ./home/plasma-apps.nix
+        plasma-manager.homeModules.plasma-manager
+        ./home/plasma.nix
+        caelestia-shell.homeManagerModules.default
+        ./home/caelestia.nix
+      ];
+
+      mkConfiguration = { gpuModule }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs username; };
+          modules = [
+            ./hosts/nixos
+            gpuModule
+            aagl.nixosModules.default
+            home-manager.nixosModules.home-manager
+          ]
+          ++ desktopModules
+          ++ [
+            {
+              nix.settings = aagl.nixConfig;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "bak";
+                extraSpecialArgs = { inherit inputs username; };
+                users.${username} = {
+                  imports = combinedHomeModules;
+                };
               };
-            };
-          }
-        ];
-      };
+            }
+          ];
+        };
+    in {
+      nixosConfigurations = {
+        nvidia = mkConfiguration {
+          gpuModule = ./hosts/nixos/gpu-nvidia.nix;
+        };
 
-    plasmaHomeModules = [
-      ./home
-      ./home/plasma-apps.nix
-      plasma-manager.homeModules.plasma-manager
-      ./home/plasma.nix
-    ];
-    hyprlandHomeModules = [
-      ./home
-      caelestia-shell.homeManagerModules.default
-      ./home/caelestia.nix
-    ];
-  in {
-    nixosConfigurations = {
+        amd = mkConfiguration {
+          gpuModule = ./hosts/nixos/gpu-amd.nix;
+        };
 
-      nvidia-plasma = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-nvidia.nix;
-        desktopModule = ./hosts/nixos/plasma.nix;
-        desktopHomeModules = plasmaHomeModules;
-      };
-
-      nvidia-hyprland = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-nvidia.nix;
-        desktopModule = ./hosts/nixos/hyprland.nix;
-        desktopHomeModules = hyprlandHomeModules;
-      };
-
-      amd-plasma = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-amd.nix;
-        desktopModule = ./hosts/nixos/plasma.nix;
-        desktopHomeModules = plasmaHomeModules;
-      };
-
-      amd-hyprland = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-amd.nix;
-        desktopModule = ./hosts/nixos/hyprland.nix;
-        desktopHomeModules = hyprlandHomeModules;
-      };
-
-      intel-plasma = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-intel.nix;
-        desktopModule = ./hosts/nixos/plasma.nix;
-        desktopHomeModules = plasmaHomeModules;
-      };
-
-      intel-hyprland = mkConfiguration {
-        gpuModule = ./hosts/nixos/gpu-intel.nix;
-        desktopModule = ./hosts/nixos/hyprland.nix;
-        desktopHomeModules = hyprlandHomeModules;
+        intel = mkConfiguration {
+          gpuModule = ./hosts/nixos/gpu-intel.nix;
+        };
       };
     };
-  };
 }
