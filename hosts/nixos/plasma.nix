@@ -1,5 +1,52 @@
 { pkgs, ... }:
 let
+  papirus-dark = pkgs.papirus-icon-theme;
+
+  orchis-plasma-style = pkgs.stdenvNoCC.mkDerivation {
+    pname = "orchis-plasma-style";
+    version = "unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "vinceliuice";
+      repo = "Orchis-kde";
+      rev = "b2a96919eee40264e79db402b915f926436100ad";
+      hash = pkgs.lib.fakeHash;
+    };
+    installPhase = ''
+      mkdir -p $out/share/plasma/desktoptheme
+      cp -r plasma/desktoptheme/Orchis-dark $out/share/plasma/desktoptheme/
+    '';
+  };
+
+  we10xos-colors = pkgs.stdenvNoCC.mkDerivation {
+    pname = "we10xos-colors";
+    version = "unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "yeyushengfan258";
+      repo = "We10XOS-kde";
+      rev = "270f0d7d3c1f0d5540109e6116d2fa891664f24b";
+      hash = pkgs.lib.fakeHash;
+    };
+    installPhase = ''
+      mkdir -p $out/share/color-schemes
+      cp color-schemes/We10XOSDark.colors $out/share/color-schemes/
+    '';
+  };
+
+  willow-aurorae = pkgs.stdenvNoCC.mkDerivation {
+   pname = "willow-aurorae";
+   version = "unstable-plasma6";
+   src = pkgs.fetchFromGitHub {
+     owner = "doncsugar";
+     repo = "willow-theme";
+     rev = "59b4e62ec63a6948e0f2fbc78a5d951b36a7f584";
+     hash = pkgs.lib.fakeHash;
+   };
+   installPhase = ''
+     mkdir -p $out/share/aurorae/themes
+     cp -r aurorae-themes/WillowDarkAlt $out/share/aurorae/themes/
+   '';
+  };
+
   sugar-candy = pkgs.stdenvNoCC.mkDerivation {
     pname = "sddm-sugar-candy";
     version = "unstable";
@@ -44,6 +91,10 @@ in
   environment.systemPackages = with pkgs; [
     sugar-candy
     catwalk
+    papirus-dark
+    orchis-plasma-style
+    we10xos-colors
+    willow-aurorae
     kdePackages.plasma-workspace-wallpapers
     kdePackages.okular
     kdePackages.kolourpaint
