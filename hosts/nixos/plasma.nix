@@ -95,6 +95,7 @@ in
     orchis-plasma-style
     we10xos-colors
     willow-aurorae
+    kdePackages.aurorae
     kdePackages.plasma-workspace-wallpapers
     kdePackages.okular
     kdePackages.kolourpaint

@@ -9,6 +9,10 @@
     open = false;
   };
 
+  boot.blacklistedKernelModules = [
+    "nouveau"
+  ];
+
   hardware.graphics.extraPackages = [
     pkgs.nvidia-vaapi-driver
   ];

@@ -1,9 +1,14 @@
 { pkgs, ... }:
 {
-  programs.vscode.enable = true;
+  programs.vscodium = {
+    enable = true;
+  };
 
   home.packages = with pkgs; [
-    jetbrains-toolbox
+    jetbrains.rider
+    jetbrains.pycharm
+    jetbrains.idea
+    android-studio
     unityhub
     mongodb-compass
     mysql-workbench

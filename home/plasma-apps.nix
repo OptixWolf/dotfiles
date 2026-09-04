@@ -11,7 +11,7 @@ let
     };
     installPhase = ''
       mkdir -p $out/share/plasma/plasmoids/AndromedaLauncher
-      cp -r contents/* metadata.json $out/share/plasma/plasmoids/AndromedaLauncher/
+      cp -r contents metadata.json $out/share/plasma/plasmoids/AndromedaLauncher/
     '';
   };
 in

@@ -1,5 +1,7 @@
 { lib, pkgs, ... }:
 {
+  home.file.".p10k.zsh".source = ./p10k.zsh;
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -33,6 +35,7 @@
 
     initContent = lib.mkMerge [
       (lib.mkOrder 500 "fastfetch\n\n")
+      (lib.mkOrder 900 "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh\n")
       (lib.mkOrder 1000 (builtins.readFile ./extra.zsh))
     ];
   };

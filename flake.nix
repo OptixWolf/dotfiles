@@ -52,18 +52,18 @@
           ]
           ++ desktopModules
           ++ [
-            {
+            ({ pkgs, ... }: {
               nix.settings = aagl.nixConfig;
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                backupFileExtension = "bak";
+                backupCommand = "${pkgs.coreutils}/bin/mv -f";
                 extraSpecialArgs = { inherit inputs username; };
                 users.${username} = {
                   imports = combinedHomeModules;
                 };
               };
-            }
+            })
           ];
         };
     in {

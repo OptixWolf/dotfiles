@@ -3,6 +3,8 @@
   programs.caelestia = {
     enable = true;
 
+    systemd.enable = false;
+
     settings = {
       # theme = "dark";
       # bar.enabled = true;

@@ -1,6 +1,12 @@
 { config, pkgs, username, ... }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./disks.nix
+  ];
+
+  boot.initrd.luks.devices.cryptswap.device = "/dev/nvme0n1p3";
+  swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -8,7 +14,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 7d";
   };
 
   boot.loader.grub = {
@@ -25,12 +31,16 @@
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
 
-  networking.hostName = "nixos";
+  networking.hostName = "NixOS-01";
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "de_DE.UTF-8";
-  console.keyMap = "de";
+  services.xserver.xkb = {
+    layout = "de";
+    variant = "";
+  };
+  console.useXkbConfig = true;
 
   hardware.graphics = {
     enable = true;

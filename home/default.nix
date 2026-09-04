@@ -11,11 +11,19 @@
 
   programs.home-manager.enable = true;
 
-  home.file = {
-    "Bilder".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Nextcloud/Bilder";
-    "Desktop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Nextcloud/Desktop";
-    "Dokumente".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Nextcloud/Dokumente";
-    "Videos".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Nextcloud/Videos";
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = false;
+    pictures  = "${config.home.homeDirectory}/Nextcloud/Bilder";
+    documents = "${config.home.homeDirectory}/Nextcloud/Dokumente";
+    videos    = "${config.home.homeDirectory}/Nextcloud/Videos";
+    desktop   = "${config.home.homeDirectory}/Nextcloud/Desktop";
   };
 
   home.packages = with pkgs; [
