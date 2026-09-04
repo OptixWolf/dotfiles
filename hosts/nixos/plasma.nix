@@ -55,7 +55,7 @@ let
       owner = "MarianArlt";
       repo = "sddm-sugar-candy";
       rev = "2b72ef6c6f720fe0ffde5ea5c7c48152e02f6c4f";
-      hash = "sha256-XggFVsEXLYklrfy1ElkIp9fkTw4wuXbyVkaVC2q4ZLU=";
+      hash = "sha256-XggFVsEXLYklrfy1ElkIp9fkTw4wvXbyVkaVC2q4ZLU=";
     };
 
     installPhase = ''
