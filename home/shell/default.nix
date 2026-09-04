@@ -6,7 +6,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    ohMyZsh = {
+    oh-my-zsh = {
       enable = true;
       theme = "powerlevel10k/powerlevel10k";
       plugins = [ "git" ];

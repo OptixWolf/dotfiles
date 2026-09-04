@@ -69,7 +69,7 @@
   services.tailscale.enable = true;
   services.logmein-hamachi.enable = true;
   services.power-profiles-daemon.enable = true;
-  hardware.openrgb.enable = true;
+  services.hardware.openrgb.enable = true;
   services.gnome.gnome-keyring.enable = true;
   services.udisks2.enable = true;
 

@@ -81,7 +81,7 @@
           value = "steam_app_3513350";
           match-whole = true;
         };
-        apply.opacity.active = {
+        apply.opacity = {
           value = 2;
           apply = "force";
         };
