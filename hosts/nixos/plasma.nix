@@ -9,7 +9,7 @@ let
       owner = "vinceliuice";
       repo = "Orchis-kde";
       rev = "b2a96919eee40264e79db402b915f926436100ad";
-      hash = pkgs.lib.fakeHash;
+      hash = "sha256-m01AVrnXNdg3Rftj0cQWef/RrBgSDy5kaMHagwKywEo=;
     };
     installPhase = ''
       mkdir -p $out/share/plasma/desktoptheme
@@ -24,7 +24,7 @@ let
       owner = "yeyushengfan258";
       repo = "We10XOS-kde";
       rev = "270f0d7d3c1f0d5540109e6116d2fa891664f24b";
-      hash = pkgs.lib.fakeHash;
+      hash = "sha256-EXhFazRo76BVcAEigsB5GIMOsNe27ztBDUcHv8JWXS0=";
     };
     installPhase = ''
       mkdir -p $out/share/color-schemes
@@ -39,7 +39,7 @@ let
      owner = "doncsugar";
      repo = "willow-theme";
      rev = "59b4e62ec63a6948e0f2fbc78a5d951b36a7f584";
-     hash = pkgs.lib.fakeHash;
+     hash = "sha256-NPf9uCnIdvRna1X3hvbFZCQYDvcLeMWWd2xjHbDGmA4=";
    };
    installPhase = ''
      mkdir -p $out/share/aurorae/themes
@@ -55,7 +55,7 @@ let
       owner = "MarianArlt";
       repo = "sddm-sugar-candy";
       rev = "2b72ef6c6f720fe0ffde5ea5c7c48152e02f6c4f";
-      hash = "sha256-S33c7qSgTVPNA0MqZhecJnb3NG57UMDXe0cWGy0cIuI=";
+      hash = "sha256-XggFVsEXLYklrfy1ElkIp9fkTw4wuXbyVkaVC2q4ZLU=";
     };
 
     installPhase = ''
