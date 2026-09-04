@@ -19,6 +19,20 @@ let
         'Background="${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Milkyway/contents/images/1920x1080.png"'
     '';
   };
+
+  catwalk = pkgs.stdenvNoCC.mkDerivation {
+    pname = "plasma-catwalk";
+    version = "unstable";
+    src = ./extras/org.kde.plasma.catwalk;
+
+    dontConfigure = true;
+    dontBuild = true;
+
+    installPhase = ''
+      mkdir -p $out/share/plasma/plasmoids/org.kde.plasma.catwalk
+      cp -r . $out/share/plasma/plasmoids/org.kde.plasma.catwalk/
+    '';
+  };
 in
 {
   services.desktopManager.plasma6.enable = true;
@@ -29,6 +43,7 @@ in
 
   environment.systemPackages = with pkgs; [
     sugar-candy
+    catwalk
     kdePackages.plasma-workspace-wallpapers
     kdePackages.okular
     kdePackages.kolourpaint
