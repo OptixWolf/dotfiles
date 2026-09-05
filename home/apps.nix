@@ -53,4 +53,6 @@
     linux-wallpaperengine
     clamtk
   ];
+
+  services.easyeffects.enable = true;
 }
