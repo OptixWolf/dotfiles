@@ -35,7 +35,12 @@
       theme = "Orchis-dark";
       colorScheme = "We10XOSDark";
       iconTheme = "Papirus-Dark";
-      cursor.cursorFeedback = "None";
+    };
+
+    workspace.cursor = {
+      theme = "breeze_cursors";
+      size = 24;
+      cursorFeedback = "None";
     };
 
     panels = [
@@ -95,21 +100,7 @@
           "org.kde.plasma.panelspacer"
           "org.kde.plasma.catwalk"
           "org.kde.plasma.colorpicker"
-          {
-            systemTray.items = {
-              shown = [
-                "org.kde.plasma.volume"
-                "org.kde.plasma.networkmanagement"
-                "org.kde.plasma.clipboard"
-              ];
-              hidden = [
-                "org.kde.kdeconnect"
-                "org.kde.plasma.devicenotifier"
-                "org.kde.plasma.cameraindicator"
-                "org.kde.plasma.mediacontroller"
-              ];
-            };
-          }
+          "org.kde.plasma.systemtray"
           {
             name = "org.kde.plasma.digitalclock";
             config.Appearance = {

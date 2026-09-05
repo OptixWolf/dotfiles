@@ -5,9 +5,6 @@
     ./disks.nix
   ];
 
-  boot.initrd.luks.devices.cryptswap.device = "/dev/nvme0n1p3";
-  swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
-
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

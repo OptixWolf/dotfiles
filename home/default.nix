@@ -7,6 +7,7 @@
     ./gaming.nix
     ./git.nix
     ./theme.nix
+    ./wallpaper.nix
   ];
 
   programs.home-manager.enable = true;
