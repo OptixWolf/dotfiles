@@ -33,38 +33,100 @@ let
   };
 
   willow-aurorae = pkgs.stdenvNoCC.mkDerivation {
-   pname = "willow-aurorae";
-   version = "unstable-plasma6";
-   src = pkgs.fetchFromGitHub {
-     owner = "doncsugar";
-     repo = "willow-theme";
-     rev = "59b4e62ec63a6948e0f2fbc78a5d951b36a7f584";
-     hash = "sha256-NPf9uCnIdvRna1X3hvbFZCQYDvcLeMWWd2xjHbDGmA4=";
-   };
-   installPhase = ''
-     mkdir -p $out/share/aurorae/themes
-     cp -r aurorae-themes/WillowDarkAlt $out/share/aurorae/themes/
-   '';
-  };
-
-  sugar-candy = pkgs.stdenvNoCC.mkDerivation {
-    pname = "sddm-sugar-candy";
-    version = "unstable";
-    src = pkgs.fetchFromGitLab {
-      domain = "framagit.org";
-      owner = "MarianArlt";
-      repo = "sddm-sugar-candy";
-      rev = "2b72ef6c6f720fe0ffde5ea5c7c48152e02f6c4f";
-      hash = "sha256-XggFVsEXLYklrfy1ElkIp9fkTw4wvXbyVkaVCZq4ZLU=";
+    pname = "willow-aurorae";
+    version = "unstable-plasma6";
+    src = pkgs.fetchFromGitHub {
+      owner = "doncsugar";
+      repo = "willow-theme";
+      rev = "59b4e62ec63a6948e0f2fbc78a5d951b36a7f584";
+      hash = "sha256-NPf9uCnIdvRna1X3hvbFZCQYDvcLeMWWd2xjHbDGmA4=";
     };
 
     installPhase = ''
-      mkdir -p $out/share/sddm/themes/Sugar-Candy
-      cp -r ./* $out/share/sddm/themes/Sugar-Candy/
-      substituteInPlace $out/share/sddm/themes/Sugar-Candy/theme.conf \
-        --replace-fail 'Background="Backgrounds/Mountain.jpg"' \
-        'Background="${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/Milkyway/contents/images/1920x1080.png"'
+      runHook preInstall
+
+      theme=$out/share/aurorae/themes/WillowDarkAlt
+      mkdir -p $theme
+
+      # Dekoration + Buttons (Alt-Variante) + rc/metadata
+      cp -a aurorae-themes/src/dark/opaque/*    $theme/
+      cp -a aurorae-themes/src/dark/icons-alt/* $theme/
+      cp -a aurorae-themes/WillowDarkAlt/*      $theme/
+
+      # Backup-Dateien aus dem Repo aussortieren
+      rm -f $theme/*.bak $theme/*.LEFTbak
+
+      # Plasma 6 braucht metadata.json
+      cat > $theme/metadata.json <<'EOF'
+      {
+        "KPlugin": {
+          "Authors": [ { "Name": "doncsugar" } ],
+          "EnabledByDefault": true,
+          "Id": "willow-dark-alt-aurorae",
+          "License": "GPLv3",
+          "Name": "Willow Dark Alt",
+          "Version": "0.1"
+        }
+      }
+      EOF
+
+      runHook postInstall
     '';
+  };
+
+  wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/MilkyWay/contents/images/5120x2880.png";
+
+  sddm-theme = pkgs.sddm-astronaut.override {
+    embeddedTheme = "hyprland_kath";
+    themeConfig = {
+      Background            = wallpaper;
+      BackgroundPlaceholder = wallpaper;
+      CropBackground        = "true";
+      FullBlur              = "false";
+      PartialBlur           = "true";
+      Blur                  = "2.0";
+      BlurMax               = "48";
+      DimBackground         = "0.25";
+
+      BackgroundColor     = "#0b1026";
+      DimBackgroundColor  = "#05070f";
+      FormBackgroundColor = "#131a33";
+
+      HeaderTextColor = "#e6e9f5";
+      DateTextColor   = "#e6e9f5";
+      TimeTextColor   = "#e6e9f5";
+
+      LoginFieldBackgroundColor    = "#1b2444";
+      PasswordFieldBackgroundColor = "#1b2444";
+      LoginFieldTextColor          = "#e6e9f5";
+      PasswordFieldTextColor       = "#e6e9f5";
+      PlaceholderTextColor         = "#8b93b5";
+
+      UserIconColor          = "#9db4ff";
+      PasswordIconColor      = "#9db4ff";
+      HoverUserIconColor     = "#c9a7ff";
+      HoverPasswordIconColor = "#c9a7ff";
+
+      LoginButtonBackgroundColor = "#7aa2f7";
+      LoginButtonTextColor       = "#0b1026";
+
+      SystemButtonsIconsColor             = "#c8cfe8";
+      HoverSystemButtonsIconsColor        = "#c9a7ff";
+      SessionButtonTextColor              = "#c8cfe8";
+      HoverSessionButtonTextColor         = "#c9a7ff";
+      VirtualKeyboardButtonTextColor      = "#c8cfe8";
+      HoverVirtualKeyboardButtonTextColor = "#c9a7ff";
+
+      DropdownBackgroundColor         = "#131a33";
+      DropdownTextColor               = "#e6e9f5";
+      DropdownSelectedBackgroundColor = "#2a3563";
+
+      HighlightBackgroundColor = "#7aa2f7";
+      HighlightTextColor       = "#0b1026";
+      HighlightBorderColor     = "#c9a7ff";
+
+      WarningColor = "#f7768e";
+    };
   };
 
   catwalk = pkgs.stdenvNoCC.mkDerivation {
@@ -85,18 +147,19 @@ in
   services.desktopManager.plasma6.enable = true;
 
   services.displayManager.sddm = {
-    theme = "Sugar-Candy";
+    enable = true;
+    theme = "sddm-astronaut-theme";
+    extraPackages = [ sddm-theme ];
   };
 
   environment.systemPackages = with pkgs; [
-    sugar-candy
+    sddm-theme
     catwalk
     papirus-dark
     orchis-plasma-style
     we10xos-colors
     willow-aurorae
     kdePackages.aurorae
-    kdePackages.plasma-workspace-wallpapers
     kdePackages.okular
     kdePackages.kolourpaint
     kdePackages.ktorrent

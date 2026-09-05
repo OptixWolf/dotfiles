@@ -13,10 +13,4 @@
       package = pkgs.papirus-icon-theme;
     };
   };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "kvantum";
-    style.name = "kvantum";
-  };
 }

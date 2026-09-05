@@ -51,5 +51,6 @@
     veracrypt
     gparted
     linux-wallpaperengine
+    clamtk
   ];
 }

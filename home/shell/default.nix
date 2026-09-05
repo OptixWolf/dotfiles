@@ -10,7 +10,6 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "powerlevel10k/powerlevel10k";
       plugins = [ "git" ];
     };
 
@@ -35,7 +34,7 @@
 
     initContent = lib.mkMerge [
       (lib.mkOrder 500 "fastfetch\n\n")
-      (lib.mkOrder 900 "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh\n")
+      (lib.mkOrder 950 "[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh\n")
       (lib.mkOrder 1000 (builtins.readFile ./extra.zsh))
     ];
   };
