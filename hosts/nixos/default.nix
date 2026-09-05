@@ -59,6 +59,8 @@
     jack.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+
   programs.steam = {
     enable = true;
     gamescopeSession.enable = true;

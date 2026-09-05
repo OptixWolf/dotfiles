@@ -55,7 +55,7 @@
             name = "AndromedaLauncher";
             config.General = {
               activationIndicator = false;
-              customButtonImage = "distributor-logo-archlinux";
+              customButtonImage = "distributor-logo-nixos";
               customGreeting = "Wer das liest, muss ein Croissant essen!";
               floating = true;
               launcherPosition = 1;
