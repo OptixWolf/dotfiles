@@ -81,6 +81,7 @@
   services.hardware.openrgb.enable = true;
   services.gnome.gnome-keyring.enable = true;
   services.udisks2.enable = true;
+  services.pcscd.enable = true;
 
   services.clamav = {
     daemon.enable = true;

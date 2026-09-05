@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.firefox = {
     enable = true;
@@ -11,14 +11,12 @@
     librewolf
     ungoogled-chromium
     pear-desktop
-    p3x-onenote
 
     # Kommunikation
     discord-canary
-    vesktop
     element-desktop
     telegram-desktop
-    teams-for-linux
+    vesktop
     zoom-us
     zapzap
 
@@ -54,5 +52,15 @@
     clamtk
   ];
 
-  services.easyeffects.enable = true;
+  services.easyeffects = {
+    enable = true;
+    settings.Window.showTrayIcon = false;
+  };
+  
+  xdg.autostart = {
+  enable = true;
+  entries = [
+    "${pkgs.zapzap}/share/applications/zapzap.desktop"
+  ];
+};
 }

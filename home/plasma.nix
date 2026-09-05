@@ -5,6 +5,10 @@
     Use = true;
   };
 
+  programs.plasma.configFile.ksmserverrc = {
+    General.loginMode = "emptySession";
+  };
+
   programs.plasma.workspace.windowDecorations = {
     library = "org.kde.kwin.aurorae";
     theme = "__aurorae__svg__WillowDarkAlt";
@@ -100,7 +104,11 @@
           "org.kde.plasma.panelspacer"
           "org.kde.plasma.catwalk"
           "org.kde.plasma.colorpicker"
-          "org.kde.plasma.systemtray"
+          {
+            systemTray.items.hidden = [
+            "org.kde.plasma.mediacontroller"
+          ];
+          }
           {
             name = "org.kde.plasma.digitalclock";
             config.Appearance = {
