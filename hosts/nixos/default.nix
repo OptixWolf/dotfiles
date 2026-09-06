@@ -111,6 +111,7 @@ in
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;
@@ -158,7 +159,7 @@ in
     enable = true;
     ui.enable = true;
   };
-  
+
   systemd.user.services.gpu-screen-recorder-ui = {
     description = "GPU Screen Recorder UI";
     wantedBy  = [ "graphical-session.target" ];
