@@ -79,7 +79,7 @@ in
   i18n.defaultLocale = "de_DE.UTF-8";
   services.xserver.xkb = {
     layout = "de";
-    variant = "";
+    variant = "deadacute";
   };
   console.useXkbConfig = true;
 
