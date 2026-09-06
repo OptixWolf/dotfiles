@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  home = config.home.homeDirectory;
+  nc   = "${home}/Nextcloud";
+in
 {
   imports = [
     ./shell
@@ -21,10 +25,22 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = false;
-    pictures  = "${config.home.homeDirectory}/Nextcloud/Bilder";
-    documents = "${config.home.homeDirectory}/Nextcloud/Dokumente";
-    videos    = "${config.home.homeDirectory}/Nextcloud/Videos";
-    desktop   = "${config.home.homeDirectory}/Nextcloud/Desktop";
+
+    desktop     = "${home}/Schreibtisch";
+    documents   = "${home}/Dokumente";
+    download    = "${home}/Downloads";
+    music       = "${home}/Musik";
+    pictures    = "${home}/Bilder";
+    publicShare = "${home}/Öffentlich";
+    templates   = "${home}/Vorlagen";
+    videos      = "${home}/Videos";
+  };
+
+  home.file = {
+    "Bilder".source       = config.lib.file.mkOutOfStoreSymlink "${nc}/Bilder";
+    "Dokumente".source    = config.lib.file.mkOutOfStoreSymlink "${nc}/Dokumente";
+    "Videos".source       = config.lib.file.mkOutOfStoreSymlink "${nc}/Videos";
+    "Schreibtisch".source = config.lib.file.mkOutOfStoreSymlink "${nc}/Desktop";
   };
 
   home.packages = with pkgs; [

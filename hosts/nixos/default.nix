@@ -20,7 +20,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
-    "${inputs.nixpkgs-gsr-ui}/nixos/modules/programs/gpu-screen-recorder-ui.nix"
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -155,22 +154,18 @@ in
     }];
   }];
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      inherit (inputs.nixpkgs-gsr-ui.legacyPackages.${prev.stdenv.hostPlatform.system})
-        gpu-screen-recorder-ui
-        gpu-screen-recorder-notification;
-    })
-  ];
-
-  programs.gpu-screen-recorder-ui.enable = true;
+  programs.gpu-screen-recorder = {
+    enable = true;
+    ui.enable = true;
+  };
+  
   systemd.user.services.gpu-screen-recorder-ui = {
     description = "GPU Screen Recorder UI";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
+    wantedBy  = [ "graphical-session.target" ];
+    after     = [ "graphical-session.target" ];
+    partOf    = [ "graphical-session.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.gpu-screen-recorder-ui}/bin/gsr-ui launch-daemon";
+      ExecStart = "${lib.getExe pkgs.gpu-screen-recorder-ui} launch-daemon";
       Restart = "on-failure";
       RestartSec = 3;
     };
