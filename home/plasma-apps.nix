@@ -22,5 +22,7 @@ in
     kurve
     cava
     andromeda-launcher
+    kdePackages.dragon
+    kdePackages.elisa
   ];
 }

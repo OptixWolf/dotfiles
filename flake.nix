@@ -3,6 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-gsr-ui.url = "github:js6pak/nixpkgs/gpu-screen-recorder-ui/init";
+
+    distro-grub-themes = {
+      url = "github:AdisonCavani/distro-grub-themes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";

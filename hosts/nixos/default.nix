@@ -1,8 +1,26 @@
-{ config, pkgs, username, ... }:
+{ config, lib, pkgs, username, inputs, ... }:
+let
+  virusEvent = pkgs.writeShellScript "clamav-virus-event" ''
+    export PATH=${lib.makeBinPath [ pkgs.coreutils pkgs.libnotify ]}
+    ALERT="Signature detected by clamav: $CLAM_VIRUSEVENT_VIRUSNAME in $CLAM_VIRUSEVENT_FILENAME"
+
+    for ADDRESS in /run/user/*; do
+      USERID=''${ADDRESS#/run/user/}
+      case "$USERID" in *[!0-9]*|"") continue ;; esac
+      [ "$USERID" -ge 1000 ] || continue
+
+      /run/wrappers/bin/sudo -u "#$USERID" \
+        DBUS_SESSION_BUS_ADDRESS="unix:path=$ADDRESS/bus" \
+        ${pkgs.libnotify}/bin/notify-send -u critical -i dialog-warning \
+          "Virus found!" "$ALERT" || true
+    done
+  '';
+in
 {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
+    "${inputs.nixpkgs-gsr-ui}/nixos/modules/programs/gpu-screen-recorder-ui.nix"
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -18,9 +36,24 @@
     enable = true;
     efiSupport = true;
     device = "nodev";
+    theme = inputs.distro-grub-themes.packages.${pkgs.stdenv.hostPlatform.system}.nixos-grub-theme;
+    gfxmodeEfi = "1920x1080";
+    splashImage = null;
     configurationLimit = 20;
   };
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.plymouth.enable = true;
+
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "udev.log_level=3"
+    "rd.systemd.show_status=false"
+    "fbcon=nodefer"
+  ];
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
@@ -30,6 +63,17 @@
 
   networking.hostName = "NixOS-01";
   networking.networkmanager.enable = true;
+
+  programs.dconf.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    glib
+    gsettings-desktop-schemas
+  ];
+  
+  environment.sessionVariables.XDG_DATA_DIRS = [
+    "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+  ];
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "de_DE.UTF-8";
@@ -85,7 +129,51 @@
 
   services.clamav = {
     daemon.enable = true;
-    updater.enable = true;
+    daemon.settings = {
+      VirusEvent = "${virusEvent}";
+      OnAccessMountPath = "/";
+      OnAccessPrevention = false;
+      OnAccessExcludeUname = "clamav";
+      OnAccessExcludeRootUID = true;
+    };
+
+    updater = {
+      enable = true;
+      frequency = 12;
+      interval = "hourly";
+    };
+
+    clamonacc.enable = true;
+  };
+
+  security.sudo.extraRules = [{
+    users = [ "clamav" ];
+    runAs = "ALL";
+    commands = [{
+      command = "${pkgs.libnotify}/bin/notify-send";
+      options = [ "NOPASSWD" "SETENV" ];
+    }];
+  }];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      inherit (inputs.nixpkgs-gsr-ui.legacyPackages.${prev.stdenv.hostPlatform.system})
+        gpu-screen-recorder-ui
+        gpu-screen-recorder-notification;
+    })
+  ];
+
+  programs.gpu-screen-recorder-ui.enable = true;
+  systemd.user.services.gpu-screen-recorder-ui = {
+    description = "GPU Screen Recorder UI";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.gpu-screen-recorder-ui}/bin/gsr-ui launch-daemon";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
   };
 
   services.ollama = {

@@ -69,6 +69,27 @@
         "type": "github"
       }
     },
+    "distro-grub-themes": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774698239,
+        "narHash": "sha256-9gL1K1pKJ5P/KVnpcZusGXhF4LuL4yBdjUy2ZAi5GB4=",
+        "owner": "AdisonCavani",
+        "repo": "distro-grub-themes",
+        "rev": "6e9e018abf38c0b3ed2bff1912ecf30a94e0c917",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AdisonCavani",
+        "repo": "distro-grub-themes",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -82,6 +103,24 @@
       "original": {
         "owner": "edolstra",
         "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     },
@@ -164,6 +203,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-gsr-ui": {
+      "locked": {
+        "lastModified": 1779320817,
+        "narHash": "sha256-09W799kGidkdSSZvcezWRcwq8JaNT984vWYsRzSE1LI=",
+        "owner": "js6pak",
+        "repo": "nixpkgs",
+        "rev": "ca0dcced40000c45f1ebc72d8830107da74070ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "js6pak",
+        "ref": "gpu-screen-recorder-ui/init",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -210,8 +265,10 @@
       "inputs": {
         "aagl": "aagl",
         "caelestia-shell": "caelestia-shell",
+        "distro-grub-themes": "distro-grub-themes",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-gsr-ui": "nixpkgs-gsr-ui",
         "plasma-manager": "plasma-manager"
       }
     },
@@ -233,6 +290,21 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
         "type": "github"
       }
     }

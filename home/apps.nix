@@ -15,7 +15,6 @@
     # Kommunikation
     discord-canary
     element-desktop
-    telegram-desktop
     vesktop
     zoom-us
     zapzap
@@ -49,7 +48,6 @@
     veracrypt
     gparted
     linux-wallpaperengine
-    clamtk
   ];
 
   services.easyeffects = {
@@ -58,9 +56,9 @@
   };
   
   xdg.autostart = {
-  enable = true;
-  entries = [
-    "${pkgs.zapzap}/share/applications/zapzap.desktop"
-  ];
-};
+    enable = true;
+    entries = [
+      "${pkgs.zapzap}/share/applications/com.rtosta.zapzap.desktop"
+    ];
+  };
 }

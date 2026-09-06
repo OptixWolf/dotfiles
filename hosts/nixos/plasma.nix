@@ -160,7 +160,6 @@ in
     we10xos-colors
     willow-aurorae
     kdePackages.aurorae
-    kdePackages.okular
     kdePackages.kolourpaint
     kdePackages.ktorrent
     kdePackages.konsole
@@ -171,6 +170,7 @@ in
     kdePackages.krdc
     kdePackages.krdp
     kdePackages.krfb
+    kdePackages.okular
     kdePackages.partitionmanager
     kdePackages.kio-extras
     kdePackages.kio-admin
