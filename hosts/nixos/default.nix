@@ -20,6 +20,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
+    ./memory.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
