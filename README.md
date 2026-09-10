@@ -1,10 +1,9 @@
 ```sh
-git clone <repo> ~/dotfiles
-cp /etc/nixos/hardware-configuration.nix ~/dotfiles/hosts/nixos/
+git clone https://github.com/OptixWolf/dotfiles ~/dotfiles
+cd ~/dotfiles
 ```
 
 ```sh
-cd ~/dotfiles
 sudo nixos-rebuild switch --flake .#nvidia
 # oder:
 sudo nixos-rebuild switch --flake .#amd
