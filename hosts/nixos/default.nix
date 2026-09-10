@@ -81,6 +81,7 @@ in
     variant = "deadacute";
   };
   console.useXkbConfig = true;
+  environment.sessionVariables.GTK_IM_MODULE = "simple";
 
   hardware.graphics = {
     enable = true;

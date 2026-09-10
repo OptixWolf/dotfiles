@@ -2,6 +2,7 @@
 {
   programs.plasma.configFile.kxkbrc.Layout = {
     LayoutList = "de";
+    VariantList = "deadacute";
     Use = true;
   };
 
