@@ -19,10 +19,4 @@
   };
 
   swapDevices = [ { device = "/dev/mapper/cryptswap"; } ];
-
-  fileSystems."/mnt/linuxgames" = {
-    device = "/dev/sda1";
-    fsType = "ext4";
-    options = [ "nofail" ];
-  };
 }

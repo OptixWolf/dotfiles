@@ -45,13 +45,13 @@
         ./home/caelestia.nix
       ];
 
-      mkConfiguration = { gpuModule }:
+      mkConfiguration = { setupModule }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs username; };
           modules = [
             ./hosts/nixos
-            gpuModule
+            setupModule
             aagl.nixosModules.default
             home-manager.nixosModules.home-manager
           ]
@@ -73,16 +73,16 @@
         };
     in {
       nixosConfigurations = {
-        nvidia = mkConfiguration {
-          gpuModule = ./hosts/nixos/gpu-nvidia.nix;
+        setup-01 = mkConfiguration {
+          setupModule = ./hosts/nixos/setup-01.nix;
         };
 
-        amd = mkConfiguration {
-          gpuModule = ./hosts/nixos/gpu-amd.nix;
+        setup-02 = mkConfiguration {
+          setupModule = ./hosts/nixos/setup-02.nix;
         };
 
-        intel = mkConfiguration {
-          gpuModule = ./hosts/nixos/gpu-intel.nix;
+        setup-ar = mkConfiguration {
+          setupModule = ./hosts/nixos/setup-ar.nix;
         };
       };
     };

@@ -18,6 +18,7 @@ let
 in
 {
   imports = [
+    ./options.nix
     ./hardware-configuration.nix
     ./disks.nix
     ./memory.nix
@@ -61,7 +62,6 @@ in
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
 
-  networking.hostName = "NixOS-01";
   networking.networkmanager.enable = true;
 
   programs.dconf.enable = true;

@@ -1,18 +1,49 @@
-{ pkgs, ... }:
+{ pkgs, lib, osConfig ? null, ... }:
+let
+  osCfg = if osConfig == null then { } else osConfig;
+
+  cfg = osCfg.local.wallpaper or {
+      enable = false;
+      screens = [ ];
+      fps = 60;
+      environment = [ ];
+    };
+
+  screenArgs = lib.concatMap (s: [
+    "--scaling"
+    s.scaling
+    "--screen-root"
+    s.output
+    "--bg"
+    s.id
+  ]) cfg.screens;
+
+  execStart = lib.escapeShellArgs (
+    [
+      "${pkgs.linux-wallpaperengine}/bin/linux-wallpaperengine"
+      "--silent"
+      "--fps"
+      (toString cfg.fps)
+    ]
+    ++ screenArgs
+  );
+in
 {
-  systemd.user.services.wallpaperengine = {
+  systemd.user.services.wallpaperengine = lib.mkIf (cfg.enable && cfg.screens != [ ]) {
     Unit = {
       Description = "Wallpaper Engine";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
     };
+
     Service = {
-      ExecStart = "${pkgs.linux-wallpaperengine}/bin/linux-wallpaperengine --silent --fps 60 --scaling fill --screen-root DP-2 --bg 3478544779 --scaling fill --screen-root DP-1 --bg 1345100339";
+      ExecStart = execStart;
       Restart = "on-failure";
       RestartSec = 5;
 
-      Environment = [ "__GL_THREADED_OPTIMIZATIONS=0" ];
+      Environment = cfg.environment;
     };
+
     Install.WantedBy = [ "graphical-session.target" ];
   };
 }
