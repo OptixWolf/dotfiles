@@ -32,8 +32,8 @@
       username = "optixwolf";
 
       desktopModules = [
-        ./hosts/nixos/plasma.nix
-        ./hosts/nixos/hyprland.nix
+        ./hosts/nixos/desktops/plasma.nix
+        ./hosts/nixos/desktops/hyprland.nix
       ];
 
       combinedHomeModules = [
@@ -74,15 +74,15 @@
     in {
       nixosConfigurations = {
         setup-01 = mkConfiguration {
-          setupModule = ./hosts/nixos/setup-01.nix;
+          setupModule = ./hosts/nixos/setups/setup-01.nix;
         };
 
         setup-02 = mkConfiguration {
-          setupModule = ./hosts/nixos/setup-02.nix;
+          setupModule = ./hosts/nixos/setups/setup-02.nix;
         };
 
         setup-ar = mkConfiguration {
-          setupModule = ./hosts/nixos/setup-ar.nix;
+          setupModule = ./hosts/nixos/setups/setup-ar.nix;
         };
       };
     };
