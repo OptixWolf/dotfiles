@@ -84,6 +84,7 @@ in
       destination = "/etc/udev/rules.d/70-nintendo-switch.rules";
       text = ''
         SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0955", ATTR{idProduct}=="7321", MODE="0660", GROUP="nintendo_switch", TAG+="uaccess"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="057e", ATTR{idProduct}=="3000", MODE="0660", GROUP="nintendo_switch", TAG+="uaccess"
         SUBSYSTEM=="usb", ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="4ee0", MODE="0660", GROUP="nintendo_switch", TAG+="uaccess"
       '';
     })
