@@ -37,6 +37,7 @@ in
     enable = true;
     efiSupport = true;
     device = "nodev";
+    useOSProber = true;
     theme = inputs.distro-grub-themes.packages.${pkgs.stdenv.hostPlatform.system}.nixos-grub-theme;
     gfxmodeEfi = "1920x1080";
     splashImage = null;

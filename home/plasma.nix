@@ -19,13 +19,22 @@
     enable = true;
 
     input.mice = [
-    {
-      name = "Logitech G502 HERO Gaming Mouse";
-      vendorId = "046d";
-      productId = "c08b";
-      accelerationProfile = "none";
-    }
-  ];
+      {
+        name = "Logitech G502 HERO Gaming Mouse";
+        vendorId = "046d";
+        productId = "c08b";
+        accelerationProfile = "none";
+      }
+    ];
+
+    input.touchpads = [
+      {
+        name = "SYNA2BA6:00 06CB:CD3E Touchpad";
+        vendorId = "06cb";
+        productId = "cd3e";
+        naturalScroll = true;
+      }
+    ];
 
     kwin = {
       edgeBarrier = 0;
@@ -72,7 +81,7 @@
           }
           {
             name = "org.kde.plasma.icontasks";
-            config.General.launchers = "preferred://filemanager,applications:org.kde.konsole.desktop,applications:termius-app.desktop,applications:librewolf.desktop,applications:firefox.desktop,applications:vesktop.desktop,applications:steam.desktop,applications:p3x-onenote.desktop,applications:teams-for-linux.desktop,applications:codium.desktop,applications:rider.desktop,applications:feishin.desktop";
+            config.General.launchers = "preferred://filemanager,applications:org.kde.konsole.desktop,applications:termius-app.desktop,applications:librewolf.desktop,applications:firefox.desktop,applications:vesktop.desktop,applications:steam.desktop,applications:codium.desktop,applications:rider.desktop,applications:feishin.desktop";
           }
           "org.kde.plasma.marginsseparator"
         ];
