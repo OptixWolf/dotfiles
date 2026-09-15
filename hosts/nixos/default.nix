@@ -15,6 +15,39 @@ let
           "Virus found!" "$ALERT" || true
     done
   '';
+
+  omnircm-bin = pkgs.fetchurl {
+    url = "https://github.com/DefenderOfHyrule/OmniRCM/releases/download/v1.1.1/OmniRCM-linux-x64";
+    hash = "sha256-voNweYkWf5StYdxVwnWXIhPI8N/mObXyNmH1EXVaIYY=";
+    executable = true;
+  };
+
+  omnircm = pkgs.buildFHSEnv {
+    name = "omnircm";
+    targetPkgs = p: with p; [
+      libusb1          # the app dlopens libusb-1.0.so.0 on Linux
+      stdenv.cc.cc.lib # libstdc++, libgcc_s
+      fontconfig freetype
+      libx11 libice libsm libxi
+      libxcursor libxext libxrandr libxrender
+      libGL
+      gtk3 glib        # native file picker for custom payloads
+      openssl zlib icu krb5
+    ];
+    runScript = "${omnircm-bin}";
+    extraInstallCommands = ''
+      mkdir -p $out/share/applications
+      cat > $out/share/applications/omnircm.desktop <<EOF
+      [Desktop Entry]
+      Type=Application
+      Name=OmniRCM
+      Comment=Nintendo Switch RCM payload injector
+      Exec=omnircm
+      Terminal=false
+      Categories=Utility;
+      EOF
+    '';
+  };
 in
 {
   imports = [
@@ -70,6 +103,7 @@ in
   environment.systemPackages = with pkgs; [
     glib
     gsettings-desktop-schemas
+    omnircm
   ];
   
   environment.sessionVariables.XDG_DATA_DIRS = [
@@ -198,6 +232,16 @@ in
     nerd-fonts.meslo-lg
   ];
 
+  services.udev.packages = [
+    (pkgs.writeTextFile {
+      name = "nintendo-switch-rcm-udev-rules";
+      destination = "/etc/udev/rules.d/70-nintendo-switch-rcm.rules";
+      text = ''
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="0955", ATTR{idProduct}=="7321", MODE="0660", GROUP="nintendo_switch", TAG+="uaccess"
+      '';
+    })
+  ];
+
   users.users.${username} = {
     isNormalUser = true;
     description = "OptixWolf";
@@ -209,8 +253,11 @@ in
       "libvirtd"
       "vboxusers"
       "adbusers"
+      "nintendo_switch"
     ];
   };
+
+  users.groups.nintendo_switch = { };
 
   # Version der Erstinstallation, wird nicht hochgezogen.
   system.stateVersion = "26.05";
