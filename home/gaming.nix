@@ -10,5 +10,6 @@
     wine
     alvr
     sidequest
+    ns-usbloader
   ];
 }
