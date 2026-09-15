@@ -14,6 +14,5 @@
     mysql-workbench
     termius
     docker-compose
-    h2
   ];
 }

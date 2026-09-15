@@ -38,6 +38,11 @@
 
     kwin = {
       edgeBarrier = 0;
+
+      titlebarButtons = {
+        left  = [ "on-all-desktops" ];
+        right = [ "help" "minimize" "maximize" "close" ];
+      };
     };
 
     kwin.virtualDesktops = {
