@@ -123,6 +123,11 @@ in
   virtualisation.virtualbox.host.enable = true;
   programs.virt-manager.enable = true;
 
+  programs.droidcam.enable = true;
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 video_nr=0 exclusive_caps=1 card_label="DroidCam"
+  '';
+
   services.tailscale.enable = true;
   services.logmein-hamachi.enable = true;
   services.power-profiles-daemon.enable = true;
@@ -210,6 +215,7 @@ in
       "libvirtd"
       "vboxusers"
       "adbusers"
+      "video"
     ];
   };
 

@@ -5,7 +5,7 @@
     heroic
     itch
     prismlauncher
-    bottles
+    (bottles.override { removeWarningPopup = true; })
     protonplus
     wine
     alvr
