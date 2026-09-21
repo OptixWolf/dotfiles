@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 {
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   networking.hostName = "NixOS-01";
 
   local.wallpaper = {

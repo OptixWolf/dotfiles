@@ -58,7 +58,6 @@ in
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
 
   hardware.enableRedistributableFirmware = true;
