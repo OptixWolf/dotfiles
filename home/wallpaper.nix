@@ -42,6 +42,9 @@ in
       RestartSec = 5;
 
       Environment = cfg.environment;
+
+      TimeoutStopSec = "2s";
+      KillSignal = "SIGKILL";
     };
 
     Install.WantedBy = [ "graphical-session.target" ];
