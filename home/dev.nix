@@ -11,7 +11,12 @@
     android-studio
     unityhub
     mongodb-compass
-    mysql-workbench
+    (mysql-workbench.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+      sed -i '1i #include <boost/static_assert.hpp>' \
+      library/base/base/string_utilities.h
+    '';
+    }))
     termius
     docker-compose
   ];
