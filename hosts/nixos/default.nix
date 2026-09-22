@@ -182,7 +182,7 @@ in
 
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
+    package = lib.mkDefault pkgs.ollama;
   };
 
   programs.anime-game-launcher.enable = true;

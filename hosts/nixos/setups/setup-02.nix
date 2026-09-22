@@ -19,6 +19,8 @@
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
+  services.ollama.package = pkgs.ollama-rocm;
+
   fileSystems."/mnt/linuxgames" = {
     device = "/dev/sda1";
     fsType = "ext4";

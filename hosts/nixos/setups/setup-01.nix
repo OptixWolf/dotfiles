@@ -47,6 +47,9 @@
     environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
   });
 
+  services.ollama.package = pkgs.ollama-cuda;
+  nixpkgs.config.cudaCapabilities = [ "6.1" ];
+
   fileSystems."/mnt/linuxgames" = {
     device = "/dev/sda1";
     fsType = "ext4";
