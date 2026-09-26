@@ -7,11 +7,11 @@
     enable = true;
     screens = [
       {
-        output = "DP-2";
+        output = "DP-1";
         id = "3478544779";
       }
       {
-        output = "DP-1";
+        output = "HDMI-A-1";
         id = "1345100339";
       }
     ];
@@ -22,7 +22,7 @@
   services.ollama.package = pkgs.ollama-rocm;
 
   fileSystems."/mnt/linuxgames" = {
-    device = "/dev/sda1";
+    device = "/dev/nvme1n1p1";
     fsType = "ext4";
     options = [ "nofail" ];
   };
