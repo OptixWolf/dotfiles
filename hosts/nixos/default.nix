@@ -121,6 +121,7 @@ in
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.virtualbox.host.enable = true;
   programs.virt-manager.enable = true;
+  virtualisation.waydroid.enable = true;
 
   programs.droidcam.enable = true;
   boot.extraModprobeConfig = ''
